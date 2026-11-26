@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sheru Bhai AI Studio</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 16px;
+  background: #101322;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  text-align: center;
+  padding: 20px 5px;
+}
+
+header h1 {
+  color: #ffbd45;
+  font-size: 27px;
+}
+
+header p {
+  color: #bbb;
+}
+
+.card {
+  background: #1c2235;
+  padding: 18px;
+  border-radius: 16px;
+  margin: 15px 0;
+}
+
+label {
+  display: block;
+  margin: 15px 0 7px;
+}
+
+input, select {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #414b65;
+  border-radius: 9px;
+  background: #101727;
+  color: white;
+  font-size: 16px;
+}
+
+button {
+  background: #ffae32;
+  color: #171717;
+  border: 0;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.result {
+  background: #252d43;
+  padding: 14px;
+  border-radius: 12px;
+  margin: 12px 0;
+  line-height: 1.7;
+}
+
+.scene {
+  border-left: 4px solid #ffae32;
+}
+
+.small {
+  color: #aaa;
+  font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div style="font-size:55px">🦁</div>
+  <h1>SHERU BHAI AI STUDIO</h1>
+  <p>Create Amazing Hindi Cartoon Stories!</p>
+</header>
+
+<div class="card">
+
+  <h2>🎬 Create Your Story</h2>
+
+  <label>Story Topic</label>
+  <input id="topic"
+  placeholder="Sheru Bhai ka Khazana">
+
+  <label>Story Style</label>
+  <select id="style">
+    <option>3D Cartoon Adventure</option>
+    <option>Funny Comedy</option>
+    <option>Mystery and Treasure</option>
+    <option>Emotional Story</option>
+    <option>Magical Adventure</option>
+  </select>
+
+  <label>Number of Scenes</label>
+  <select id="count">
+    <option value="5">5 Scenes</option>
+    <option value="10" selected>10 Scenes</option>
+    <option value="15">15 Scenes</option>
+  </select>
+
+  <button onclick="generateStory()">
+    ✨ GENERATE STORY
+  </button>
+
+  <p class="small">
+    Free demo story generator - No API key required.
+  </p>
+
+</div>
+
+<div id="output"></div>
+
+<script>
+
+function generateStory() {
+
+  const topic =
+    document.getElementById("topic").value.trim()
+    || "Sheru Bhai ka Rahasyamayi Khazana";
+
+  const style =
+    document.getElementById("style").value;
+
+  const count =
+    Number(document.getElementById("count").value);
+
+  const scenes = [
+    "एक दिन शेरू भाई को एक रहस्यमयी चिट्ठी मिलती है।",
+    "शेरू भाई चिट्ठी पढ़कर हैरान हो जाते हैं।",
+    "वह अपने ड्राइवर को बुलाकर तैयारी करने को कहते हैं।",
+    "दोनों एक पुराने रहस्यमयी महल में पहुँचते हैं।",
+    "महल के अंदर उन्हें एक अजीब नक्शा मिलता है।",
+    "अचानक एक गुप्त दरवाजा दिखाई देता है।",
+    "शेरू भाई हिम्मत करके दरवाजे के पास जाते हैं।",
+    "दरवाजा खुलता है और अंदर एक बड़ा रहस्य मिलता है।",
+    "तभी एक अनजान आवाज सुनाई देती है।",
+    "शेरू भाई कहते हैं, असली कहानी अब शुरू होगी!"
+  ];
+
+  const dialogues = [
+    'शेरू भाई: "ये क्या रहस्य है?"',
+    'ड्राइवर: "सर, अब आगे क्या करेंगे?"',
+    'शेरू भाई: "डरो मत, मैं हूँ ना!"',
+    'ड्राइवर: "सर, यहाँ कुछ तो अजीब है!"',
+    'शेरू भाई: "चलो, पता लगाते हैं!"',
+    'ड्राइवर: "सर, दरवाजा खुल रहा है!"',
+    'शेरू भाई: "वाह! ये तो कमाल है!"',
+    'ड्राइवर: "सर, अंदर देखिए!"',
+    'शेरू भाई: "कौन है वहाँ?"',
+    'शेरू भाई: "असली कहानी अब शुरू होगी!"'
+  ];
+
+  let html = `
+    <div class="card">
+      <h2>🎉 ${escapeHTML(topic)}</h2>
+      <p>Style: ${escapeHTML(style)}</p>
+  `;
+
+  for (let i = 0; i < count; i++) {
+
+    html += `
+      <div class="result scene">
+
+        <b>🎬 SCENE ${i + 1}</b>
+
+        <br><br>
+        📖 <b>Story:</b>
+        ${scenes[i % 10]}
+
+        <br><br>
+        💬 <b>Dialogue:</b>
+        ${dialogues[i % 10]}
+
+        <br><br>
+        🖼️ <b>Image Prompt:</b>
+        3D animated lion character Sheru Bhai,
+        cinematic lighting, detailed cartoon environment,
+        ${escapeHTML(topic)}, vertical 9:16.
+
+      </div>
+    `;
+  }
+
+  html += `
+      <button onclick="copyStory()">
+        📋 COPY COMPLETE STORY
+      </button>
+    </div>
+  `;
+
+  document.getElementById("output").innerHTML = html;
+
+  window.storyText =
+    document.getElementById("output").innerText;
+
+  document.getElementById("output")
+    .scrollIntoView({behavior:"smooth"});
+}
+
+function escapeHTML(text) {
+  return text.replace(/[&<>"']/g, function(c) {
+    return {
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#39;'
+    }[c];
+  });
+}
+
+function copyStory() {
+
+  if (!window.storyText) return;
+
+  navigator.clipboard.writeText(window.storyText)
+    .then(() => alert("Story copied successfully!"))
+    .catch(() => alert("Please copy the story manually."));
+}
+
+</script>
+
+</body>
+</html>
